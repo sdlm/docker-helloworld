@@ -1,0 +1,40 @@
+# build image
+docker build -t friendlyhello .
+
+# look at image
+docker images | grep friendlyhello
+
+# run container
+docker run -p 4000:80 --name friendlyhello friendlyhello
+
+# check output
+http localhost:4000
+
+# rm container
+docker rm -f friendlyhello
+
+# -- swarm mode --
+
+# switch docker to swarm mode
+docker swarm init
+
+# start compose as service
+docker stack deploy -c docker-compose.yml getstartedlab
+
+# look at services
+docker service ls
+
+# look at containers
+docker service ps getstartedlab_web
+
+# stop app
+docker stack rm getstartedlab
+
+# switch off docker-swarm mode
+docker swarm leave --force
+
+# -- swarm cluster --
+
+# create two virtual machines on localhost
+docker-machine create --driver virtualbox myvm1
+docker-machine create --driver virtualbox myvm2
